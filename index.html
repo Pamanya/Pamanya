@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Reproductor de Video Personalizado</title>
+  <!-- Enlace al archivo CSS de Plyr -->
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.6.2/plyr.css" />
+  <!-- Enlace al archivo CSS personalizado -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <h1>Reproductor de Video Personalizado</h1>
+
+  <!-- Elemento de video -->
+  <video id="player" playsinline controls>
+    <source src="video.mp4" type="video/mp4" />
+  </video>
+
+  <!-- Lista de reproducción -->
+  <ul id="playlist">
+    <li class="playlist-item active" data-video-src="video.mp4">Video 1</li>
+    <li class="playlist-item" data-video-src="video2.mp4">Video 2</li>
+    <li class="playlist-item" data-video-src="video3.mp4">Video 3</li>
+  </ul>
+
+  <!-- Enlaces a los archivos JS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.plyr.io/3.6.2/plyr.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
