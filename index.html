@@ -1,31 +1,32 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
   <meta charset="UTF-8">
-  <title>Reproductor de Video Personalizado</title>
-  <!-- Enlace al archivo CSS de Plyr -->
-  <link rel="stylesheet" href="https://cdn.plyr.io/3.6.2/plyr.css" />
-  <!-- Enlace al archivo CSS personalizado -->
-  <link rel="stylesheet" href="styles.css" />
+  <title>Video.js Playlist Example</title>
+  <!-- Incluimos los estilos CSS de Video.js -->
+  <link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet" />
+  <!-- Incluimos los estilos CSS de nuestra lista de reproducción -->
+  <link href="style.css" rel="stylesheet" />
 </head>
 <body>
-  <h1>Reproductor de Video Personalizado</h1>
-
-  <!-- Elemento de video -->
-  <video id="player" playsinline controls>
-    <source src="video.mp4" type="video/mp4" />
-  </video>
-
-  <!-- Lista de reproducción -->
-  <ul id="playlist">
-    <li class="playlist-item active" data-video-src="https://ia804703.us.archive.org/12/items/p-1n-0cch-10.2022.hdrip.-720p.latino/P1n0cch10.2022.hdrip.720p.latino.mp4">Video 1</li>
-    <li class="playlist-item" data-video-src="https://ia804703.us.archive.org/12/items/p-1n-0cch-10.2022.hdrip.-720p.latino/P1n0cch10.2022.hdrip.720p.latino.mp4">Video 2</li>
-    <li class="playlist-item" data-video-src="video3.mp4">Video 3</li>
-  </ul>
-
-  <!-- Enlaces a los archivos JS -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.plyr.io/3.6.2/plyr.js"></script>
+  <!-- Contenedor para nuestro reproductor de video y lista de reproducción -->
+  <div class="video-container">
+    <video id="video-player" class="video-js vjs-default-skin" controls preload="auto" width="640" height="360">
+      <source src="https://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+    </video>
+    <div class="playlist-container">
+      <h3>Lista de Reproducción</h3>
+      <ul id="playlist">
+        <li class="active"><a href="https://vjs.zencdn.net/v/oceans.mp4">Oceans</a></li>
+        <li><a href="https://vjs.zencdn.net/v/oceans.webm">Oceans (WebM)</a></li>
+        <li><a href="https://vjs.zencdn.net/v/oceans.ogv">Oceans (Ogg)</a></li>
+        <li><a href="https://vjs.zencdn.net/v/oceans.flv">Oceans (FLV)</a></li>
+      </ul>
+    </div>
+  </div>
+  <!-- Incluimos la librería de Video.js -->
+  <script src="https://vjs.zencdn.net/7.15.4/video.js"></script>
+  <!-- Incluimos nuestro archivo de JavaScript -->
   <script src="tu-archivo.js"></script>
 </body>
 </html>
