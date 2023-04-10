@@ -1,54 +1,76 @@
 $(document).ready(function() {
-  // Inicializar el reproductor de video
-  const player = new Plyr('#player', {
-    autoplay: true,
-    controls: [
-      'play',
-      'progress',
-      'current-time',
-      'mute',
-      'volume',
-      'settings',
-      'fullscreen'
-    ]
+  const player = new Plyr('#player');
+  const playlist = $('#playlist');
+  const nextChapter = $('#next-chapter');
+  const countdown = $('#countdown');
+  const videos = $('#playlist a');
+  let currentVideo = 0;
+  
+  // Cargar el primer video de la lista
+  changeVideo(videos.eq(currentVideo));
+  
+  // Al hacer clic en un elemento de la lista, cambiar el video
+  videos.on('click', function(e) {
+    e.preventDefault();
+    changeVideo($(this));
   });
-
-  // Obtener la lista de reproducción y añadir eventos de clic
-  const playlistItems = $('#playlist li');
-  playlistItems.on('click', function() {
-    // Cambiar el color del elemento activo
-    playlistItems.removeClass('active');
-    $(this).addClass('active');
-
-    // Obtener la URL del video y reproducirlo en el reproductor
-    const videoSrc = $(this).data('video-src');
+  
+  // Función para cambiar el video
+  function changeVideo(video) {
+    currentVideo = video.parent().index();
+    playlist.find('.active').removeClass('active');
+    video.parent().addClass('active');
+    const src = video.data('src');
     player.source = {
       type: 'video',
       sources: [
         {
-          src: videoSrc,
-          type: 'video/mp4'
-        }
-      ]
+          src: src,
+          type: 'video/mp4',
+        },
+      ],
     };
-
-    // Mostrar el mensaje de "Capítulo siguiente"
-    player.on('ended', function() {
-      const countdown = $('<div>').addClass('countdown').text('Capítulo siguiente en 10');
-      $('body').append(countdown);
-
-      let count = 10;
-      const countdownInterval = setInterval(function() {
-        count--;
-        countdown.text(`Capítulo siguiente en ${count}`);
-        if (count === 0) {
-          clearInterval(countdownInterval);
-          const nextItem = $('.playlist-item.active').next();
-          if (nextItem.length) {
-            nextItem.click();
-          }
-        }
-      }, 1000);
-    });
+    player.play();
+    nextChapter.removeClass('show');
+    countdown.removeClass('show');
+  }
+  
+  // Al finalizar el video, mostrar el mensaje de "Capítulo siguiente" y cuenta regresiva
+  player.on('ended', function() {
+    nextChapter.addClass('show');
+    let count = 10;
+    countdown.text(count);
+    countdown.addClass('show');
+    const timer = setInterval(function() {
+      count--;
+      countdown.text(count);
+      if (count == 0) {
+        clearInterval(timer);
+        nextVideo();
+      }
+    }, 1000);
+  });
+  
+  // Cambiar al siguiente video de la lista
+  function nextVideo() {
+    currentVideo++;
+    if (currentVideo >= videos.length) {
+      currentVideo = 0;
+    }
+    changeVideo(videos.eq(currentVideo));
+  }
+  
+  // Iniciar la reproducción automática del primer video
+  player.autoplay = true;
+  
+  // Función para iniciar la reproducción del video
+  function playVideo() {
+    const video = videos.eq(currentVideo);
+    changeVideo(video);
+  }
+  
+  // Al hacer clic en el botón de "Capítulo siguiente", cambiar al siguiente video
+  nextChapter.on('click', function() {
+    nextVideo();
   });
 });
