@@ -39,11 +39,15 @@ $(document).ready(function() {
   player.on('ended', function() {
     nextChapter.addClass('show');
     let count = 10;
-    countdown.text(count);
+    const countdownText = $('<span/>', {
+      text: count,
+      class: 'countdown-text'
+    });
+    countdown.empty().append(countdownText);
     countdown.addClass('show');
     const timer = setInterval(function() {
       count--;
-      countdown.text(count);
+      countdownText.text(count);
       if (count == 0) {
         clearInterval(timer);
         nextVideo();
