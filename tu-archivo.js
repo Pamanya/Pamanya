@@ -1,15 +1,27 @@
 $(document).ready(function() {
-  // Initialize player
+  // Inicializar el reproductor de video
   const player = new Plyr('#player', {
-    controls: ['play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen']
+    autoplay: true,
+    controls: [
+      'play',
+      'progress',
+      'current-time',
+      'mute',
+      'volume',
+      'settings',
+      'fullscreen'
+    ]
   });
 
-  // Initialize playlist
+  // Obtener la lista de reproducción y añadir eventos de clic
   const playlistItems = $('#playlist li');
   playlistItems.on('click', function() {
+    // Cambiar el color del elemento activo
     playlistItems.removeClass('active');
     $(this).addClass('active');
-    const videoSrc = $(this).data('src');
+
+    // Obtener la URL del video y reproducirlo en el reproductor
+    const videoSrc = $(this).data('video-src');
     player.source = {
       type: 'video',
       sources: [
@@ -19,36 +31,24 @@ $(document).ready(function() {
         }
       ]
     };
-    player.play();
-  });
 
-  // Show poster on pause
-  player.on('pause', function() {
-    $('#poster').show();
-  });
-  player.on('play', function() {
-    $('#poster').hide();
-  });
+    // Mostrar el mensaje de "Capítulo siguiente"
+    player.on('ended', function() {
+      const countdown = $('<div>').addClass('countdown').text('Capítulo siguiente en 10');
+      $('body').append(countdown);
 
-  // Show next chapter message
-  player.on('ended', function() {
-    const nextItem = playlistItems.filter('.active').next();
-    if (nextItem.length) {
-      const messageDiv = $('#next-chapter #message');
-      messageDiv.html('Next chapter: ' + nextItem.html());
-      const countdownDiv = $('#next-chapter #countdown');
-      countdownDiv.show();
-      const countdown = new CountUp(countdownDiv.get(0), 10, 0, 0, 10, {
-        suffix: ' seconds',
-        callback: function() {
-          countdownDiv.hide();
-          nextItem.click();
+      let count = 10;
+      const countdownInterval = setInterval(function() {
+        count--;
+        countdown.text(`Capítulo siguiente en ${count}`);
+        if (count === 0) {
+          clearInterval(countdownInterval);
+          const nextItem = $('.playlist-item.active').next();
+          if (nextItem.length) {
+            nextItem.click();
+          }
         }
-      });
-      countdown.start();
-    }
+      }, 1000);
+    });
   });
-
-  // Autoplay first item
-  playlistItems.first().click();
 });
