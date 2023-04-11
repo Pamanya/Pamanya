@@ -1,32 +1,50 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="UTF-8">
-  <title>Video.js Playlist Example</title>
-  <!-- Incluimos los estilos CSS de Video.js -->
-  <link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet" />
-  <!-- Incluimos los estilos CSS de nuestra lista de reproducción -->
-  <link href="styles.css" rel="stylesheet" />
-</head>
-<body>
-  <!-- Contenedor para nuestro reproductor de video y lista de reproducción -->
-  <div class="video-container">
-    <video id="video-player" class="video-js vjs-default-skin" controls preload="auto" width="640" height="360">
-      <source src="https://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
-    </video>
-    <div class="playlist-container">
-      <h3>Lista de Reproducción</h3>
-      <ul id="playlist">
-        <li class="active"><a href="https://vjs.zencdn.net/v/oceans.mp4">Oceans</a></li>
-        <li><a href="https://vjs.zencdn.net/v/oceans.webm">Oceans (WebM)</a></li>
-        <li><a href="https://vjs.zencdn.net/v/oceans.ogv">Oceans (Ogg)</a></li>
-        <li><a href="https://vjs.zencdn.net/v/oceans.flv">Oceans (FLV)</a></li>
-      </ul>
+  <head>
+    <link href="https://vjs.zencdn.net/7.14.3/video-js.css" rel="stylesheet" />
+    <script src="https://vjs.zencdn.net/7.14.3/video.js"></script>
+    <style>
+      .vjs-custom-skin .vjs-playlist {
+        width: 200px;
+        height: 250px;
+        overflow-y: auto;
+        margin-left: 10px;
+      }
+      .vjs-custom-skin .vjs-playlist-item {
+        cursor: pointer;
+        padding: 5px;
+        border-bottom: 1px solid #ccc;
+        background-color: #f7f7f7;
+        color: #333;
+      }
+      .vjs-custom-skin .vjs-playlist-item:hover {
+        background-color: #ccc;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="video-container">
+      <video
+        id="my-video"
+        class="video-js vjs-custom-skin"
+        controls
+        preload="auto"
+        width="640"
+        height="264"
+        data-setup="{}"
+      >
+        <source src="https://example.com/video1.mp4" type="video/mp4" />
+        <source src="https://example.com/video1.webm" type="video/webm" />
+        <p class="vjs-no-js">
+          To view this video please enable JavaScript, and consider upgrading
+          to a web browser that
+          <a href="https://videojs.com/html5-video-support/" target="_blank"
+            >supports HTML5 video</a
+          >
+        </p>
+      </video>
+      <div class="vjs-playlist"></div>
     </div>
-  </div>
-  <!-- Incluimos la librería de Video.js -->
-  <script src="https://vjs.zencdn.net/7.15.4/video.js"></script>
-  <!-- Incluimos nuestro archivo de JavaScript -->
-  <script src="tu-archivo.js"></script>
-</body>
+    <script src="tu-archivo.js"></script>
+  </body>
 </html>
